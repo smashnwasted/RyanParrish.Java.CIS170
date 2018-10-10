@@ -73,12 +73,14 @@ public class MainGame {
                     System.out.print("Enter a new Single Character guess:");
                     char Guessinginput = scanner.nextLine().charAt(0);
                     tries++;
-
+                    
+                    //If the word is masked, start guessing game
                     if (Guessinginput == '*')
                     {
                         gameisRunning = false;
                         isWordGuessed = true;
                     }
+                    //
                     else
                         {
                         for (int i = 0; i < selectedword.length; i++)
@@ -98,6 +100,7 @@ public class MainGame {
 
                     }
 
+                //As the guessing game ends, if the user ran out of guesses, Game over, ask if they want to play again.
                 if (!isWordGuessed)
                 {
                     System.out.println("you ran out of guesses");
