@@ -1,0 +1,25 @@
+System for a car race
+
+
+
+	Race:
+-winner
+-start time
+-finish time
+-number of laps
+
+
+	Car:
+-#
+-top speed
+-acceleration
+-tank size
+-pit stop duration
+-MPG
+
+
+
+	Track:
+-distance
+-number of turns
+	-a turn slows all racers down at 'x' a rate
