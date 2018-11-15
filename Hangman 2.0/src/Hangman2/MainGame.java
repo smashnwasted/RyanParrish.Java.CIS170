@@ -1,7 +1,5 @@
 package Hangman2;
 
-import java.util.LinkedList;
-
 //A generic container to hold any hangman game.
 //Each instance will..
 //Have a hint
@@ -11,18 +9,25 @@ import java.util.LinkedList;
 
 public class MainGame {
 
-    private String word;
-    
-    //CHange to a list
-    private static LinkedList<String> guesses = new LinkedList<String>();
+	public String word;
+	public String guesses;
+	public String getWord() {
+		return word;
+	}
 
-    public String getWord() {
-        return word;
-    }
-    public void setWord(String word) {
-        this.word = word;
-    }
+	public void setWord(String word) {
+		this.word = word;
+	}
 
+	public String getGuesses() {
+		return guesses;
+	}
+
+	public void setGuesses(String guesses) {
+		this.guesses = guesses;
+	}
+	
+	
     public boolean isSolved() {
 
         //determine if solved.
@@ -58,4 +63,11 @@ public class MainGame {
 
         return mask;
     }
+
+	
+    public MainGame(String word) {
+		this.word = word;
+	}
+
+
 }

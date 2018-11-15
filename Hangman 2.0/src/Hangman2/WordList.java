@@ -9,19 +9,23 @@ import java.util.LinkedList;
 public class WordList {
 	
     // Create a list of words
-    public static LinkedList<String> getWordList() throws IOException{
-    	File file = new File("\"wordList.txt\"");
-    	BufferedReader in = new BufferedReader(new FileReader(file));
+    public LinkedList<String> getWordList() throws IOException{
+    	File file = new File("C:\\Users\\sryanparrish\\cis170-2018\\RyanParrish.Java.CIS170\\Hangman 2.0\\wordList.txt");
+    	//System.out.println(file.exists());
     	
-    	String inputLine;
     	LinkedList<String> list = new LinkedList<String>();
-    		
-    	while ((inputLine = in.readLine()) !=null) {
-    		list.add(inputLine);
+    	if (file.exists()) 
+    	{
+    		BufferedReader in = new BufferedReader(new FileReader(file));
+        	
+        	String inputLine;
+        	
+        		
+        	while ((inputLine = in.readLine()) !=null) {
+        		list.add(inputLine);
+        	}
     	}
-    	in.close();
-    	return list;   	
-    }
-
-
+		return list;
+		
+}
 }
