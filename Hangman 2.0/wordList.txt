@@ -1,7 +1,7 @@
 Adult
 Aeroplane
 Air
-Aircraft Carrier
+Aircraft
 Airforce
 Airport
 Album
@@ -34,7 +34,7 @@ Butterfly
 Button
 Cappuccino
 Car
-Car-race
+Carrace
 Carpet
 Carrot
 Cave
@@ -52,13 +52,13 @@ Clown
 Coffee
 Coffee-shop
 Comet
-Compact Disc
+CompactDisc
 Compass
 Computer
 Crystal
 Cup
 Cycle
-Data Base
+Database
 Desk
 Diamond
 Dress
@@ -113,7 +113,7 @@ Junk
 Kaleidoscope
 Kitchen
 Knife
-Leather jacket
+Leather
 Leg
 Library
 Liquid
@@ -182,7 +182,7 @@ Slave
 Snail
 Software
 Solid
-Space Shuttle
+Space
 Spectrum
 Sphere
 Spice
@@ -204,7 +204,7 @@ Tapestry
 Teeth
 Telescope
 Television
-Tennis racquet
+Tennis 
 Thermometer
 Tiger
 Toilet
@@ -228,4 +228,4 @@ Wheelchair
 Window
 Woman
 Worm
-X-ray
+Xray
