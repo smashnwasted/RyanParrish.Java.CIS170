@@ -2,34 +2,23 @@ package usersOrders;
 
 public class Orders {
 	
-	String item;
-	int quantity;
-	int userId;
-	int cost;
+	static float bolt18 = (float) .18;
+	static float bolt14 = (float) .20;
+	static float bolt38 = (float) .24;
+	static float bolt12 = (float) .30;
 	
-	public String getItem() {
-		return item;
-	}
-	public void setItem(String item) {
-		this.item = item;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	public int getCost() {
-		return cost;
-	}
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
+	static int bolt18quantity;
+	static int bolt14quantity;
+	static int bolt38quantity;
+	static int bolt12quantity;
+	
+	public float combinedprice;
+
+	static float shipping = (float) 20.00;
+	static float total = shipping + combinedprice;
+	
+	
+	
+	
 
 }

@@ -6,7 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import userInfo.UserInfo_Start;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -14,12 +18,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+
+import usersOrders.OrderWindow;;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField eMail_textfield;
-	private JTextField password_textField;
+	private JPasswordField pwdPassword;
 
 	/**
 	 * Launch the application.
@@ -75,14 +82,27 @@ public class Login extends JFrame {
 		lblPassowrd.setBounds(0, 109, 64, 14);
 		contentPane.add(lblPassowrd);
 		
-		password_textField = new JTextField();
-		password_textField.setBounds(66, 111, 131, 20);
-		contentPane.add(password_textField);
-		password_textField.setColumns(10);
-		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String usermail = eMail_textfield.getText();
+				String password = pwdPassword.getText();
+				
+				if (password.contains("Parrish") && usermail.contains("Ryan")) {
+					eMail_textfield.setText(null);
+					pwdPassword.setText(null);
+					
+					OrderWindow newOrder = new OrderWindow();
+					newOrder.main(null);
+					setVisible(false);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
+					eMail_textfield.setText(null);
+					pwdPassword.setText(null);
+				}
 			}
 		});
 		btnLogin.setBounds(10, 156, 118, 23);
@@ -91,6 +111,10 @@ public class Login extends JFrame {
 		JButton btnCreateNewAccount = new JButton("Create New Account");
 		btnCreateNewAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				UserInfo_Start newUser = new UserInfo_Start();
+				newUser.main(null);
+				setVisible(false);
 			}
 		});
 		btnCreateNewAccount.setBounds(138, 156, 165, 23);
@@ -99,6 +123,7 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("Exit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 			}
 		});
 		btnNewButton.setBounds(313, 156, 111, 23);
@@ -107,5 +132,10 @@ public class Login extends JFrame {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 143, 414, 2);
 		contentPane.add(separator_1);
+		
+		pwdPassword = new JPasswordField();
+		pwdPassword.setText("Password");
+		pwdPassword.setBounds(66, 111, 131, 20);
+		contentPane.add(pwdPassword);
 	}
 }
