@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import userInfo.UserInfo_Start;
+import userInfo.UserInfo_Window;
+import userInfo.Users;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
+import usersOrders.Application;
 import usersOrders.OrderWindow;;
 
 public class Login extends JFrame {
@@ -48,6 +50,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 228);
 		contentPane = new JPanel();
@@ -72,16 +75,19 @@ public class Login extends JFrame {
 		contentPane.add(lblEmail);
 		
 		eMail_textfield = new JTextField();
+		eMail_textfield.setText("admin");
 		eMail_textfield.setBounds(66, 80, 131, 20);
 		contentPane.add(eMail_textfield);
 		eMail_textfield.setColumns(10);
 		
-		JLabel lblPassowrd = new JLabel("Passowrd");
+		JLabel lblPassowrd = new JLabel("Password");
 		lblPassowrd.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPassowrd.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblPassowrd.setBounds(0, 109, 64, 14);
 		contentPane.add(lblPassowrd);
 		
+		
+		//when login process
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,37 +95,73 @@ public class Login extends JFrame {
 				String usermail = eMail_textfield.getText();
 				String password = pwdPassword.getText();
 				
-				if (password.contains("Parrish") && usermail.contains("Ryan")) {
-					eMail_textfield.setText(null);
-					pwdPassword.setText(null);
-					
-					OrderWindow newOrder = new OrderWindow();
-					newOrder.main(null);
-					setVisible(false);
+				//booleans to test if the user is valid or logged in
+				boolean loggedin = false;
+				boolean validuser = false;
+		
+				// if the user is not logged in or a valid user
+				if(!validuser && !loggedin) 
+				{
+					//get the users info
+					for(Users u : Application.users) 
+					{
+						//if the password matched the email
+						if (password.contains(u.password) && usermail.contains(u.eMail)) 
+						{
+							//set the Current User to the user Id matching the email and password of the user
+							Application.currentuser = u.userId;
+							//reset the text fields
+							eMail_textfield.setText(null);
+							pwdPassword.setText(null);
+							//the log in passes the test
+							loggedin = true;
+							validuser = true;
+						}
+						else
+						{
+							//rest the text fields
+							eMail_textfield.setText(null);
+							pwdPassword.setText(null);
+						}
+					}
 				}
-				else
+				//If the user is valid and passes login
+				if(loggedin && validuser) 
+				{
+				//rest text fields
+				eMail_textfield.setText(null);
+				pwdPassword.setText(null);
+				//Open the Order Window
+				OrderWindow newOrder = new OrderWindow();
+				newOrder.main(null);
+				//hide the login window
+				setVisible(false);
+				}
+				//show an error
+				else 
 				{
 					JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
-					eMail_textfield.setText(null);
-					pwdPassword.setText(null);
 				}
-			}
+		}
 		});
 		btnLogin.setBounds(10, 156, 118, 23);
 		contentPane.add(btnLogin);
 		
+		//go to create a new user
 		JButton btnCreateNewAccount = new JButton("Create New Account");
 		btnCreateNewAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				UserInfo_Start newUser = new UserInfo_Start();
+				//open UserInfo Window and hide the login window
+				UserInfo_Window newUser = new UserInfo_Window();
 				newUser.main(null);
 				setVisible(false);
 			}
 		});
+		
 		btnCreateNewAccount.setBounds(138, 156, 165, 23);
 		contentPane.add(btnCreateNewAccount);
 		
+		//Close the App
 		JButton btnNewButton = new JButton("Exit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +176,7 @@ public class Login extends JFrame {
 		contentPane.add(separator_1);
 		
 		pwdPassword = new JPasswordField();
-		pwdPassword.setText("Password");
+		pwdPassword.setText("admin");
 		pwdPassword.setBounds(66, 111, 131, 20);
 		contentPane.add(pwdPassword);
 	}

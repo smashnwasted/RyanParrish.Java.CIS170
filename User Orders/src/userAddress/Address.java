@@ -1,37 +1,21 @@
 package userAddress;
 
+//Class for the Address
 public class Address {
 	
-	String State;
-	String City;
-	String Street;
-	int ZipCode;
+	public String state;
+	public String city;
+	public String street;
+	public String zipCode;
+	public int userId;
 	
-	public String getState() {
-		return State;
+	//Constructor
+	public Address(int userId, String state, String city, String street, String zipCode) 
+	{
+		this.state = state;
+		this.city = city;
+		this.street = street;
+		this.zipCode = zipCode;
+		this.userId = userId;
 	}
-	public void setState(String state) {
-		State = state;
-	}
-	public String getCity() {
-		return City;
-	}
-	public void setCity(String city) {
-		City = city;
-	}
-	public String getStreet() {
-		return Street;
-	}
-	public void setStreet(String street) {
-		Street = street;
-	}
-	public int getZipCode() {
-		return ZipCode;
-	}
-	public void setZipCode(int zipCode) {
-		ZipCode = zipCode;
-	}
-	
-	
-	
 }

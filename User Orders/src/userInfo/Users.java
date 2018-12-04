@@ -1,37 +1,23 @@
 package userInfo;
 
+//Class for creating a user
 public class Users {
 	
-	int userId;
-	String fName;
-	String lName;
-	String eMail;
-	String password;
-	//address
-	
-	public String getfName() {
-		return fName;
-	}
-	public void setfName(String fName) {
+	//Constructor for the user
+	public Users(int userId, String fName, String lName, String eMail, String password) 
+	{
+		this.userId = userId;
 		this.fName = fName;
-	}
-	public String getlName() {
-		return lName;
-	}
-	public void setlName(String lName) {
 		this.lName = lName;
-	}
-	public String geteMail() {
-		return eMail;
-	}
-	public void seteMail(String eMail) {
 		this.eMail = eMail;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	
+	public int userId;
+	public String fName;
+	public String lName;
+	public String eMail;
+	public String password;
+	
 }

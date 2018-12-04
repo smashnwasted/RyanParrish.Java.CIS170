@@ -6,8 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import userInfo.UserInfo_Window;
+import userInfo.Users;
+import usersOrders.Application;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
@@ -15,7 +22,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AddressInfo_2nd extends JFrame {
+public class AddressInfo_Window extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField State_textField;
@@ -30,7 +37,7 @@ public class AddressInfo_2nd extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddressInfo_2nd frame = new AddressInfo_2nd();
+					AddressInfo_Window frame = new AddressInfo_Window();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +49,8 @@ public class AddressInfo_2nd extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddressInfo_2nd() {
+	public AddressInfo_Window() {
+		setTitle("Address ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -121,9 +129,12 @@ public class AddressInfo_2nd extends JFrame {
 		contentPane.add(zipcode_textField, gbc_zipcode_textField);
 		zipcode_textField.setColumns(10);
 		
+		//Go back to the UserInfo Window
 		JButton Back = new JButton("Back");
 		Back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				UserInfo_Window.main(null);
+				setVisible(false);
 			}
 		});
 		GridBagConstraints gbc_Back = new GridBagConstraints();
@@ -132,7 +143,30 @@ public class AddressInfo_2nd extends JFrame {
 		gbc_Back.gridy = 10;
 		contentPane.add(Back, gbc_Back);
 		
+		//Add all fields to the Address list
 		JButton btnNext = new JButton("Next");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//Instance of Address
+				Address newaddress = new Address(Application.currentuser, State_textField.getText(), city_textField.getText(), street_textField.getText(), zipcode_textField.getText());
+				
+				//If the fields are empty
+				if(city_textField.getText().trim().isEmpty() || State_textField.getText().trim().isEmpty() || street_textField.getText().trim().isEmpty() || zipcode_textField.getText().trim().isEmpty() ) 
+				{
+					//error
+					JOptionPane.showMessageDialog(null, "Invalid Account Details", "Account Error", JOptionPane.ERROR_MESSAGE);	
+				}
+				else 
+				{			
+					//Else add the address to the list and open the main app, hide this window
+					Application.address.add(newaddress);
+					Application.main(null);
+					setVisible(false);
+				}
+				
+			}
+		});
 		GridBagConstraints gbc_btnNext = new GridBagConstraints();
 		gbc_btnNext.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNext.gridx = 3;

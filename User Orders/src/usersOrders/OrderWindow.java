@@ -4,8 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logIn.Login;
+import userAddress.Address;
+import userInfo.Users;
+
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
@@ -45,6 +51,7 @@ public class OrderWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public OrderWindow() {
+		setTitle("Bolt Order");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 521, 193);
 		contentPane = new JPanel();
@@ -106,52 +113,88 @@ public class OrderWindow extends JFrame {
 		contentPane.add(txtTotal);
 		txtTotal.setColumns(10);
 		
+		Orders priceInfo = new Orders();
+		
+		//Add Items to the Order
 		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (chckbx_18Bolt.isSelected()) {
-					Orders.bolt18quantity = (int) bolt18_spinner.getValue();
-					float cost18 = Orders.bolt18 * Orders.bolt18quantity;
-					Orders.combinedprice += cost18;
+				//If a check box is selected add the value of the item X the quantity and the spinner is greater than 0
+				if (chckbx_18Bolt.isSelected()) 
+				{
+					priceInfo.setBolt18quantity((int) bolt18_spinner.getValue());
 				}
-				if (chckbx_14Bolt.isSelected()){
-					Orders.bolt14quantity = (int) bolt14_spinner.getValue();
-					float cost14 = Orders.bolt14 * Orders.bolt14quantity;
-					Orders.combinedprice += cost14;
+				else if(chckbx_18Bolt.isSelected() && Integer.parseInt((String) bolt18_spinner.getValue()) <= 0) {
+					JOptionPane.showMessageDialog(null, "Please add a quantity", "Orders Error", JOptionPane.ERROR_MESSAGE);
+					
 				}
-				if (chckbx_38Bolt.isSelected()) {
-					Orders.bolt38quantity = (int) bolt38_spinner.getValue();
-					float cost38 = Orders.bolt38 * Orders.bolt38quantity;
-					Orders.combinedprice += cost38;
+				if (chckbx_14Bolt.isSelected() && Integer.parseInt((String) bolt14_spinner.getValue()) > 0)
+				{
+					priceInfo.setBolt14quantity((int) bolt14_spinner.getValue());
 				}
-				if (chckbx_12Bolt.isSelected()) {
-					Orders.bolt12quantity = (int) bolt12_spinner.getValue();
-					float cost12 = Orders.bolt12 * Orders.bolt12quantity;
-					Orders.combinedprice += cost12;
+				if (chckbx_38Bolt.isSelected() && Integer.parseInt((String) bolt38_spinner.getValue()) > 0) 
+				{
+					priceInfo.setBolt38quantity((int) bolt38_spinner.getValue());
+				}
+				if (chckbx_12Bolt.isSelected() && Integer.parseInt((String) bolt12_spinner.getValue()) > 0) 
+				{
+					priceInfo.setBolt12quantity((int) bolt12_spinner.getValue());
 				}
 				
-				float subtotal = Orders.combinedprice;
-				String stringsubtotal = String.valueOf(subtotal);
-				txtSubtotal.setText(stringsubtotal);
+				//Set the Subtotal to the items X their quantities summed
+				priceInfo.setCombinedprice((priceInfo.getBolt18quantity() * priceInfo.bolt18) + (priceInfo.getBolt14quantity() * priceInfo.bolt14) + (priceInfo.getBolt38quantity() * priceInfo.bolt38) + (priceInfo.getBolt12quantity() * priceInfo.bolt12));
+				
+				//If the subtotal is 0 then show error
+				if (priceInfo.combinedprice == 0) 
+				{
+					JOptionPane.showMessageDialog(null, "Please add something to cart ", "Orders Error", JOptionPane.ERROR_MESSAGE);
+					
+				}
+				//Else set the values of the fields in Orders
+				else
+				{
+					//set the subtotal, shipping, total
+					String stringsubtotal = String.valueOf(priceInfo.getCombinedprice());
+					txtSubtotal.setText(stringsubtotal);
+					String shipping = String.valueOf(priceInfo.shipping);
+					txtTaxShipping.setText(shipping);
+					priceInfo.setTotal(priceInfo.getCombinedprice() + priceInfo.shipping);
+					String total = String.valueOf(priceInfo.getTotal());
+					txtTotal.setText(total);
+					
+				}
 			}
 		});
 		btnAdd.setBounds(143, 32, 89, 23);
 		contentPane.add(btnAdd);
 		
+		//Update the cart
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String shipping = String.valueOf(Orders.shipping);
+				
+				String shipping = String.valueOf(priceInfo.shipping);
 				txtTaxShipping.setText(shipping);
 				
-				String total = String.valueOf(Orders.total);
+				priceInfo.setTotal(priceInfo.getCombinedprice() + priceInfo.shipping);
+				String total = String.valueOf(priceInfo.getTotal());
 				txtTotal.setText(total);
-			}
+			}	
 		});
 		btnUpdate.setBounds(310, 32, 89, 23);
 		contentPane.add(btnUpdate);
 		
+		//Add the order to the Orders List and set it to the UserId
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				priceInfo.setUserId(Application.currentuser);
+				Application.orders.add(priceInfo);
+				ReviewOrder.main(null);
+				setVisible(false);	
+			}
+		});
 		btnSubmit.setBounds(310, 110, 185, 23);
 		contentPane.add(btnSubmit);
 		
@@ -159,6 +202,7 @@ public class OrderWindow extends JFrame {
 		separator.setBounds(258, 11, 1, 143);
 		contentPane.add(separator);
 		
+		//Clear all Fields
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -172,13 +216,31 @@ public class OrderWindow extends JFrame {
 				bolt38_spinner.setValue(0);
 				bolt12_spinner.setValue(0);
 				
+				priceInfo.setBolt18quantity(0);
+				priceInfo.setBolt14quantity(0);
+				priceInfo.setBolt38quantity(0);
+				priceInfo.setBolt12quantity(0);
+				priceInfo.setCombinedprice(0);
+				priceInfo.setTotal(0);
+				
+				
 				txtSubtotal.setText(null);
 				txtTaxShipping.setText(null);
 				txtTotal.setText(null);
 				
 			}
 		});
-		btnClear.setBounds(143, 110, 89, 23);
+		btnClear.setBounds(143, 58, 89, 23);
 		contentPane.add(btnClear);
+		
+		JButton backBttn = new JButton("Back");
+		backBttn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Login.main(null);
+				setVisible(false);
+			}
+		});
+		backBttn.setBounds(143, 110, 116, 23);
+		contentPane.add(backBttn);
 	}
 }
