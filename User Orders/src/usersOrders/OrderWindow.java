@@ -124,19 +124,15 @@ public class OrderWindow extends JFrame {
 				{
 					priceInfo.setBolt18quantity((int) bolt18_spinner.getValue());
 				}
-				else if(chckbx_18Bolt.isSelected() && Integer.parseInt((String) bolt18_spinner.getValue()) <= 0) {
-					JOptionPane.showMessageDialog(null, "Please add a quantity", "Orders Error", JOptionPane.ERROR_MESSAGE);
-					
-				}
-				if (chckbx_14Bolt.isSelected() && Integer.parseInt((String) bolt14_spinner.getValue()) > 0)
+				if (chckbx_14Bolt.isSelected())
 				{
 					priceInfo.setBolt14quantity((int) bolt14_spinner.getValue());
 				}
-				if (chckbx_38Bolt.isSelected() && Integer.parseInt((String) bolt38_spinner.getValue()) > 0) 
+				if (chckbx_38Bolt.isSelected()) 
 				{
 					priceInfo.setBolt38quantity((int) bolt38_spinner.getValue());
 				}
-				if (chckbx_12Bolt.isSelected() && Integer.parseInt((String) bolt12_spinner.getValue()) > 0) 
+				if (chckbx_12Bolt.isSelected()) 
 				{
 					priceInfo.setBolt12quantity((int) bolt12_spinner.getValue());
 				}
@@ -202,7 +198,6 @@ public class OrderWindow extends JFrame {
 		separator.setBounds(258, 11, 1, 143);
 		contentPane.add(separator);
 		
-		//Clear all Fields
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
